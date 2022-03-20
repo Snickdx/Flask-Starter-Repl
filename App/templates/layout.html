@@ -15,12 +15,13 @@
   <body>
     <nav class="purple">
       <div class="nav-wrapper">
-        <a href="#!" class="brand-logo center">{% block page %}{% endblock %}</a>
+        <a href="#!" class="right">{% block page %}{% endblock %}</a>
         <div class="nav-wrapper">
             <ul id="nav-mobile" class="left">
                 <li><a href="/">Home</a></li>
                 <li><a href="/users">Users Jinja</a></li>
                 <li><a href="/static/users">Users JS</a></li>
+                <li><a href="/uploader">Uploader</a></li>
             </ul>
         </div>
       </div>
@@ -43,5 +44,6 @@
     <div class="container" id="content">{% block content %}{% endblock %}</div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script> M.AutoInit(); </script>
   </body>
 </html>
