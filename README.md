@@ -1,16 +1,9 @@
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/uwidcit/flask-starter)
-
-# Flask Starter Template
+# Flask Starter Template fo REPLit
 A template for simple flask projects. For production projects with testing and deployment it is recommended to use [flaskmvc](https://gitpod.io/#https://github.com/uwidcit/flaskmvc).
-
-
-# Dependencies
-* Python3/pip3
-* Packages listed in requirements.txt
 
 # Installing Dependencies
 ```
-$ pip install -r requirements.txt
+$ poetry install
 ```
 
 # Flask Commands
@@ -40,9 +33,9 @@ $ flask create-user bob bobpass
 
 # Running the Project
 
-_For development run the serve command (what you execute):_
+_Replit is configured to execute the following command to run the project:_
 ```
-$ flask run
+$ python3 -m App.main
 ```
 
 # Initializing the Database
