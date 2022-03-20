@@ -1,25 +1,64 @@
-Flask is a minimal Python framework that helps you create a web server. 
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/uwidcit/flask-starter)
 
-Let's take a look at the code we have:
+# Flask Starter Template
+A template for simple flask projects. For production projects with testing and deployment it is recommended to use [flaskmvc](https://gitpod.io/#https://github.com/uwidcit/flaskmvc).
 
-```python
-from flask import Flask
 
-app = Flask(__name__)
+# Dependencies
+* Python3/pip3
+* Packages listed in requirements.txt
 
-@app.route("/")
-def hello_world():
-    return "<h1>Hello, World!</h1>"
+# Installing Dependencies
 ```
-	
-What did that code do?
+$ pip install -r requirements.txt
+```
 
-First we `import` the `Flask` class. An instance of this class will be our WSGI application.
+# Flask Commands
 
-Next we create an instance of this class. The first argument is the name of the application’s module or package. `__name__` is a convenient shortcut for this that is appropriate for most cases. This is needed so that Flask knows where to look for resources such as templates and static files.
+wsgi.py is a utility script for performing various tasks related to the project. You can use it to import and test any code in the project. 
+You just need create a manager command function, for example:
 
-We then use the `route()` decorator to tell Flask what URL should trigger our function. In this case we use `/` routh, which is the default route of any website.
+```
+# inside wsgi.py
 
-The function returns the message we want to display in the user’s browser. The default content type is HTML, so HTML in the string will be rendered by the browser.
+@app.cli.command("create-user")
+@click.argument("username")
+@click.argument("password")
+def create_user_command(username, password):
+    newuser = User(username=username, password=password)
+    db.session.add(newuser)
+    db.session.commit()
+    print(f'{username} created!')
+```
 
-To learn more, checkout the [official guide](https://flask.palletsprojects.com/en/2.0.x/quickstart/).
+Then execute the command invoking with flask cli with command name and the relevant parameters
+
+```
+$ flask create-user bob bobpass
+```
+
+
+# Running the Project
+
+_For development run the serve command (what you execute):_
+```
+$ flask run
+```
+
+# Initializing the Database
+When connecting the project to a fresh empty database ensure the appropriate configuration is set then file then run the following command. This must aslo be executed once when running the app on heroku by opening the heroku console, executing bash and running the command in the dyno.
+
+```
+$ flask init
+```
+
+# Database Migrations
+If changes to the models are made, the database must be'migrated' so that it can be synced with the new models.
+Then execute following commands using manage.py. More info [here](https://flask-migrate.readthedocs.io/en/latest/)
+
+```
+$ flask db init
+$ flask db migrate
+$ flask db upgrade
+$ flask db --help
+```
