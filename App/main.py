@@ -11,6 +11,7 @@ from datetime import timedelta
 
 from App.models import db, init_db, get_migrate, create_db, User, Upload
 
+
 def create_app():
     app = Flask(__name__, static_url_path='/static')
     CORS(app)
