@@ -1,5 +1,8 @@
+from werkzeug.security import check_password_hash, generate_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_login import UserMixin
+from .uploads import store_file, remove_file
 
 db = SQLAlchemy()
 
@@ -12,3 +15,39 @@ def create_db(app):
     
 def init_db(app):
     db.init_app(app)
+
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    username =  db.Column(db.String, nullable=False, unique=True)
+    password = db.Column(db.String(120), nullable=False)
+
+    def __init__(self, username, password):
+        self.username = username
+        self.set_password(password)
+
+    def toDict(self):
+        return{
+            'id': self.id,
+            'username': self.username
+        }
+
+    def set_password(self, password):
+        """Create hashed password."""
+        self.password = generate_password_hash(password, method='sha256')
+    
+    def check_password(self, password):
+        """Check hashed password."""
+        return check_password_hash(self.password, password)
+
+class Upload(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String, nullable=False)
+
+    def __init__(self, file):
+      self.filename = store_file(file)
+
+    def remove_file(self):
+      remove_file(self.filename)
+
+    def get_url(self):
+      return f'/uploads/{self.filename}'
